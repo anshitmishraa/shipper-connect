@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/shipper_connect
+    url: jdbc:postgresql://containers-us-west-71.railway.app:6992/railway
     username: postgres
-    password: root
+    password: cQTfJRz130ElGSY7bfED
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:

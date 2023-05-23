@@ -10,7 +10,7 @@ CREATE TABLE load (
   no_of_trucks INTEGER NOT NULL,
   weight DECIMAL(10, 2) NOT NULL,
   comment VARCHAR(255),
-  shipper_id UUID NOT NULL,
+  shipper_id VARCHAR(255) NOT NULL,
   load_date DATE NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
