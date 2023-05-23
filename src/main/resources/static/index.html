@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <title>Load Management</title>
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Load Management</h1>
+        <form id="loadForm">
+            <div class="field">
+                <label class="label">Loading Point</label>
+                <div class="control">
+                    <input class="input" type="text" id="loadingPointInput" placeholder="Enter loading point">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Unloading Point</label>
+                <div class="control">
+                    <input class="input" type="text" id="unloadingPointInput" placeholder="Enter unloading point">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Product Type</label>
+                <div class="control">
+                    <input class="input" type="text" id="productTypeInput" placeholder="Enter product type">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Truck Type</label>
+                <div class="control">
+                    <input class="input" type="text" id="truckTypeInput" placeholder="Enter truck type">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Number of Trucks</label>
+                <div class="control">
+                    <input class="input" type="integer" id="noOfTrucksInput" placeholder="Enter number of trucks">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Weight</label>
+                <div class="control">
+                    <input class="input" type="text" id="weightInput" placeholder="Enter weight">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Comment</label>
+                <div class="control">
+                    <textarea class="textarea" id="commentInput" placeholder="Enter comment"></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Shipper ID</label>
+                <div class="control">
+                    <input class="input" type="text" id="shipperIdInput" placeholder="Enter shipper ID">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Date</label>
+                <div class="control">
+                    <input class="input" type="date" id="dateInput">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Add Load</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="loadList" class="mt-4">
+        <h2 class="subtitle">List of Loads</h2>
+        <table class="table is-fullwidth">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Loading Point</th>
+                <th>Unloading Point</th>
+                <th>Product Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="loadTableBody">
+            <!-- Load data will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+    </div>
+</section>
+
+<script src="./js/script.js"></script>
+</body>
+
+</html>
