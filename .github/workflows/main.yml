@@ -28,6 +28,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Start Application Server
+        run: ./gradlew bootRun &
+
+      - name: Wait for Server to Start
+        run: sleep 20
+
       - name: Check health API
         run: |
           API_URL="http://localhost:8080/health"  
