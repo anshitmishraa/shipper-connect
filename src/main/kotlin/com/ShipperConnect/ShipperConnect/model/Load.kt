@@ -16,18 +16,9 @@ data class Load(
         var unloadingPoint: String,
         var productType: String,
         var truckType: String,
-        var noOfTrucks: Integer,
-        var weight: Integer,
+        var noOfTrucks: Int,
+        var weight: Int,
         var comment: String? = null,
-        var shipperId: UUID,
+        var shipperId: String,
         var loadDate: Date
-) {
-    // Getter and Setter for shipperId
-    fun getLoadShipperId(): UUID {
-        return shipperId
-    }
-
-    fun setLoadShipperId(shipperId: UUID) {
-        this.shipperId = shipperId
-    }
-}
+)

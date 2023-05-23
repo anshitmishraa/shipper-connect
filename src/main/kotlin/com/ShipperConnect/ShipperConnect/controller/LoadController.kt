@@ -4,7 +4,6 @@ import com.ShipperConnect.ShipperConnect.model.Load
 import com.ShipperConnect.ShipperConnect.service.LoadService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 
 @RestController
@@ -22,8 +21,8 @@ class LoadController(@Autowired private val loadService: LoadService)  {
         return loadService.getAllLoads()
     }
 
-    @GetMapping("")
-    fun getLoadsByShipperId(@RequestParam shipperId: UUID): List<Load> {
+    @GetMapping("/{shipperId}")
+    fun getLoadsByShipperId(@PathVariable shipperId: String): List<Load> {
         return loadService.getLoadsByShipperId(shipperId)
     }
 

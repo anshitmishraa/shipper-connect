@@ -14,21 +14,21 @@ class LoadService(private val loadRepository: LoadRepository) {
     }
 
     fun getAllLoads() : List<Load> {
-        return loadRepository.fetchAllLoads()
+        return loadRepository.findAll()
     }
 
-    fun getLoadsByShipperId(shipperId: UUID): List<Load> {
-        // Implement the logic to retrieve loads by shipperId from the repository
+    fun getLoadsByShipperId(shipperId: String): List<Load> {
+        // Retrieve loads by shipperId from the repository
         return loadRepository.findAllByShipperId(shipperId)
     }
 
     fun getLoadById(loadId: Long): Load {
-        // Implement the logic to retrieve a load by loadId from the repository
+        // Retrieve a load by loadId from the repository
         return loadRepository.findById(loadId).orElseThrow { NoSuchElementException("Load not found") }
     }
 
     fun updateLoad(loadId: Long, load: Load): Load {
-        // Implement the logic to update a load in the repository
+        // Update a load in the repository
         val existingLoad = loadRepository.findById(loadId).orElseThrow { NoSuchElementException("Load not found") }
 
         existingLoad.loadingPoint = load.loadingPoint
@@ -38,7 +38,7 @@ class LoadService(private val loadRepository: LoadRepository) {
         existingLoad.noOfTrucks = load.noOfTrucks
         existingLoad.weight = load.weight
         existingLoad.comment = load.comment
-        existingLoad.setLoadShipperId(load.shipperId)
+        existingLoad.shipperId = load.shipperId
 
         // Update other properties as needed
         return loadRepository.save(existingLoad)
