@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: postgresql:postgresql://containers-us-west-71.railway.app:6992/railway
+    url: jdbc:postgresql://containers-us-west-71.railway.app:6992/railway
     username: postgres
     password: cQTfJRz130ElGSY7bfED
   jpa:
