@@ -1,4 +1,33 @@
+// Function to display a success message
+function showSuccessMessage(message) {
+    const successMessage = document.getElementById('successMessage');
+    successMessage.textContent = message;
+    successMessage.style.display = 'block';
+
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.style.display = 'none';
+}
+
+// Function to display an error message
+function showErrorMessage(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'none';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Get the current date
+    var currentDate = new Date();
+
+    // Format the current date as yyyy-mm-dd
+    var formattedDate = currentDate.toISOString().substring(0, 10);
+
+    // Set the value of the date input field to the current date
+    document.getElementById('dateInput').value = formattedDate;
+
     const loadForm = document.getElementById('loadForm');
 
     loadForm.addEventListener('submit', (event) => {
@@ -13,9 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const comment = document.getElementById('commentInput').value;
         const shipperId = document.getElementById('shipperIdInput').value;
         const date = document.getElementById('dateInput').value;
-
-        // Perform your logic to send the data to the server or perform any other operations
-        // For example, you can use the Fetch API to send a POST request to your backend
 
         fetch('/loads', {
                 method: 'POST',
@@ -36,21 +62,98 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => response.text())
             .then(message => {
-                console.log(message);
-                // Handle the response from the server as needed
-                // You can display a success message or perform any other actions
+                // Display success message
+                showSuccessMessage(message);
             })
             .catch(error => {
-                console.error('Error:', error);
-                // Handle any errors that occurred during the request
-                // You can display an error message or perform any other actions
+                // Display error message
+                showErrorMessage(error);
             });
 
         // Reset the form fields
         loadForm.reset();
     });
 
-    const loadForm = document.getElementById('loadForm');
+    const editLoadForm = document.getElementById('editLoadForm');
+
+    editLoadForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // Get the updated form values
+        const updatedLoadingPoint = document.getElementById('editLoadingPointInput').value;
+        const updatedUnloadingPoint = document.getElementById('editUnloadingPointInput').value;
+        const updatedProductType = document.getElementById('editProductTypeInput').value;
+        const updatedTruckType = document.getElementById('editTruckTypeInput').value;
+        const updatedNoOfTrucks = document.getElementById('editNoOfTrucksInput').value;
+        const updatedWeight = document.getElementById('editWeightInput').value;
+        const updatedComment = document.getElementById('editCommentInput').value;
+        const updatedShipperId = document.getElementById('editShipperIdInput').value;
+        const updatedDateInput = document.getElementById('editDateInput');
+        const loadDate = new Date(load.date);
+        const formattedDate = loadDate.toISOString().split('T')[0];
+        updatedDateInput.value = formattedDate;
+
+        fetch(`/loads/${loadId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                loadingPoint: updatedLoadingPoint,
+                unloadingPoint: updatedUnloadingPoint,
+                productType: updatedProductType,
+                truckType: updatedTruckType,
+                noOfTrucks: updatedNoOfTrucks,
+                weight: updatedWeight,
+                comment: updatedComment,
+                shipperId: updatedShipperId,
+                date: updatedDate
+            })
+        })
+        .then(response => response.text())
+        .then(message => {
+            // Display success message
+            showSuccessMessage(message);
+
+            // Close the edit modal
+            editModal.classList.remove('is-active');
+        })
+        .catch(error => {
+            // Display error message
+            showErrorMessage(error);
+        });
+
+        // Reset the form fields
+        editLoadForm.reset();
+    });
+
+
+    // Function to populate the edit modal with load data
+    const populateEditModal = (loadId) => {
+        // Fetch the load data by ID from the backend
+        fetch(`/loads/${loadId}`)
+            .then(response => response.json())
+            .then(load => {
+                // Populate the edit modal with the load data
+                document.getElementById('editLoadingPointInput').value = load.loadingPoint;
+                document.getElementById('editUnloadingPointInput').value = load.unloadingPoint;
+                document.getElementById('editProductTypeInput').value = load.productType;
+                document.getElementById('editTruckTypeInput').value = load.truckType;
+                document.getElementById('editNoOfTrucksInput').value = load.noOfTrucks;
+                document.getElementById('editWeightInput').value = load.weight;
+                document.getElementById('editCommentInput').value = load.comment;
+                document.getElementById('editShipperIdInput').value = load.shipperId;
+                document.getElementById('editDateInput').value = load.date;
+
+                // Show the edit modal
+                const editModal = document.getElementById('editModal');
+                editModal.classList.add('is-active');
+            })
+            .catch(error => {
+                console.error('Error fetching load data:', error);
+            });
+    };
+
     const loadTableBody = document.getElementById('loadTableBody');
 
     // Function to create a table row for a load
@@ -73,15 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
         productTypeCell.textContent = load.productType;
         row.appendChild(productTypeCell);
 
+        const dateCell = document.createElement('td');
+        const loadDate = new Date(load.date);
+        const formattedDate = loadDate.toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        dateCell.textContent = formattedDate;
+        row.appendChild(dateCell);
+
         const actionsCell = document.createElement('td');
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.classList.add('button', 'is-small', 'is-primary', 'mr-2');
         editButton.addEventListener('click', () => {
-            // Handle edit functionality here
-            // You can redirect to a separate page or show a modal to edit the load details
-            // For simplicity, this example doesn't include the complete edit implementation
-            console.log('Edit load with ID:', load.id);
+            populateEditModal(load.id);
         });
         actionsCell.appendChild(editButton);
 
@@ -89,10 +199,33 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('button', 'is-small', 'is-danger');
         deleteButton.addEventListener('click', () => {
-            // Handle delete functionality here
-            // For simplicity, this example only removes the table row from the DOM
-            loadTableBody.removeChild(row);
-            console.log('Delete load with ID:', load.id);
+            // Display a confirmation dialog
+            if (confirm('Are you sure you want to delete this load?')) {
+                // Fetch API DELETE request
+                fetch(`/loads/${load.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Successful response
+                            return response.json();
+                        } else {
+                            // Error response
+                            return response.text().then(errorMessage => {
+                                throw new Error(errorMessage);
+                            });
+                        }
+                    })
+                    .then(data => {
+                        loadTableBody.removeChild(row);
+                    })
+                    .catch(error => {
+                        showErrorMessage(error.message);
+                    });
+            }
         });
         actionsCell.appendChild(deleteButton);
 
@@ -112,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         })
         .catch(error => {
-            console.error('Error fetching load data:', error);
+            // Display error message
+            showErrorMessage(error);
         });
 });
