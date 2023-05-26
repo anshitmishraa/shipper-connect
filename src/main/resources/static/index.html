@@ -9,6 +9,10 @@
 </head>
 
 <body>
+<!-- Add these elements where you want to display the messages -->
+<div id="successMessage" style="display: none;" class="notification is-success"></div>
+<div id="errorMessage" style="display: none;" class="notification is-danger"></div>
+
 <section class="section">
     <div class="container">
         <h1 class="title">Load Management</h1>
@@ -46,7 +50,7 @@
             <div class="field">
                 <label class="label">Weight</label>
                 <div class="control">
-                    <input class="input" type="text" id="weightInput" placeholder="Enter weight">
+                    <input class="input" type="integer" id="weightInput" placeholder="Enter weight">
                 </div>
             </div>
             <div class="field">
@@ -93,6 +97,80 @@
     </div>
     </div>
 </section>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Edit Load</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form id="editLoadForm">
+                <div class="field">
+                    <label class="label">Loading Point</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editLoadingPointInput" placeholder="Enter loading point">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Unloading Point</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editUnloadingPointInput" placeholder="Enter unloading point">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Product Type</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editProductTypeInput" placeholder="Enter product type">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Truck Type</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editTruckTypeInput" placeholder="Enter truck type">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Number of Trucks</label>
+                    <div class="control">
+                        <input class="input" type="integer" id="editNoOfTrucksInput" placeholder="Enter number of trucks">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Weight</label>
+                    <div class="control">
+                        <input class="input" type="integer" id="editWeightInput" placeholder="Enter weight">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Comment</label>
+                    <div class="control">
+                        <textarea class="textarea" id="editCommentInput" placeholder="Enter comment"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Shipper ID</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editShipperIdInput" placeholder="Enter shipper ID">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Date</label>
+                    <div class="control">
+                        <input class="input" type="date" id="editDateInput">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
 
 <script src="./js/script.js"></script>
 </body>
