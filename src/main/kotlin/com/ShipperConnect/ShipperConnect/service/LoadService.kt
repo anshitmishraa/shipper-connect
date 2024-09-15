@@ -67,6 +67,7 @@ class LoadService(private val loadRepository: LoadRepository) {
             existingLoad.weight = load.weight
             existingLoad.comment = load.comment
             existingLoad.shipperId = load.shipperId
+            existingLoad.loadDate = load.loadDate
 
             // Update other properties as needed
             return loadRepository.save(existingLoad)

@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.text())
             .then(message => {
                 // Display success message
-                showSuccessMessage(message);
+            showSuccessMessage(`Load Added Successfully`);
             })
             .catch(error => {
                 // Display error message
@@ -79,6 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
     editLoadForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
+        if (currentEditLoadId === null) {
+            showErrorMessage('No load selected for editing.');
+            return;
+        }
+
         // Get the updated form values
         const updatedLoadingPoint = document.getElementById('editLoadingPointInput').value;
         const updatedUnloadingPoint = document.getElementById('editUnloadingPointInput').value;
@@ -88,12 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const updatedWeight = document.getElementById('editWeightInput').value;
         const updatedComment = document.getElementById('editCommentInput').value;
         const updatedShipperId = document.getElementById('editShipperIdInput').value;
-        const updatedDateInput = document.getElementById('editDateInput');
-        const loadDate = new Date(load.date);
+        const updatedLoadDate = document.getElementById('editDateInput').value;
+        const loadDate = new Date(updatedLoadDate);
         const formattedDate = loadDate.toISOString().split('T')[0];
-        updatedDateInput.value = formattedDate;
+        updatedLoadDate.value = formattedDate;
 
-        fetch(`/loads/${loadId}`, {
+        fetch(`/loads/${currentEditLoadId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -107,13 +112,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 weight: updatedWeight,
                 comment: updatedComment,
                 shipperId: updatedShipperId,
-                loadDate: updatedDate
+                loadDate: updatedLoadDate
             })
         })
         .then(response => response.text())
         .then(message => {
             // Display success message
-            showSuccessMessage(message);
+            showSuccessMessage(`Load Updated Successfully`);
 
             // Close the edit modal
             editModal.classList.remove('is-active');
@@ -125,6 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reset the form fields
         editLoadForm.reset();
+
+         currentEditLoadId = null; // Clear the current edit load ID
     });
 
 
@@ -143,7 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('editWeightInput').value = load.weight;
                 document.getElementById('editCommentInput').value = load.comment;
                 document.getElementById('editShipperIdInput').value = load.shipperId;
-                document.getElementById('editDateInput').value = load.date;
+                // Parse the date string to a Date object
+                const loadDate = new Date(load.loadDate);
+                // Format the date to 'YYYY-MM-DD' for the input field
+                const formattedDate = loadDate.toISOString().split('T')[0];
+                document.getElementById('editDateInput').value = formattedDate;
+
+                currentEditLoadId = loadId; // Store the ID of the load being edited
 
                 // Show the edit modal
                 const editModal = document.getElementById('editModal');
@@ -177,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         row.appendChild(productTypeCell);
 
         const dateCell = document.createElement('td');
-        const loadDate = new Date(load.date);
+        const loadDate = new Date(load.loadDate);
         if (!isNaN(loadDate.getTime())) {
             const formattedDate = loadDate.toLocaleDateString('en-US', {
                 day: '2-digit',
