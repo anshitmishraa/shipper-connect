@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     weight,
                     comment,
                     shipperId,
-                    date
+                    loadDate: date
                 })
             })
             .then(response => response.text())
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 weight: updatedWeight,
                 comment: updatedComment,
                 shipperId: updatedShipperId,
-                date: updatedDate
+                loadDate: updatedDate
             })
         })
         .then(response => response.text())
@@ -178,12 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dateCell = document.createElement('td');
         const loadDate = new Date(load.date);
-        const formattedDate = loadDate.toLocaleDateString('en-US', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        dateCell.textContent = formattedDate;
+        if (!isNaN(loadDate.getTime())) {
+            const formattedDate = loadDate.toLocaleDateString('en-US', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+
+            dateCell.textContent = formattedDate;
+        } else {
+            dateCell.textContent = 'Invalid Date';
+        }
         row.appendChild(dateCell);
 
         const actionsCell = document.createElement('td');
