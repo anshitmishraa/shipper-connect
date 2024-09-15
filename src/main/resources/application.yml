@@ -1,11 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://containers-us-west-71.railway.app:6992/railway
-    username: postgres
-    password: cQTfJRz130ElGSY7bfED
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     locations: classpath:db/migration
     enabled: true
-
