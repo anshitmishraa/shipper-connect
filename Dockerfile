@@ -15,6 +15,6 @@ FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /build/libs/shipper-connect.jar shipper-connect-app.jar
+COPY --from=build /build/libs/ShipperConnect-0.0.1-SNAPSHOT.jar ShipperConnect-0.0.1-SNAPSHOT.jar
 
 ENTRYPOINT ["java", "-jar", "shipper-connect-app.jar"]
