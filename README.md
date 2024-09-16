@@ -65,7 +65,7 @@ The project is structured around a REST API with service-level logging, error ha
 1. **Clone the repository**:
     ```bash
     git clone https://github.com/anshitmishraa/shipper-connect.git
-    cd ShipperConnect
+    cd shipper-connect
     ```
 
 2. **Configure the database** (Optional):
@@ -78,12 +78,12 @@ The project is structured around a REST API with service-level logging, error ha
 
 3. **Build the project**:
     ```bash
-    mvn clean install
+    ./gradlew clean build
     ```
 
 4. **Run the application**:
     ```bash
-    mvn spring-boot:run
+    ./gradlew bootRun
     ```
 
 5. **Access the application**:
